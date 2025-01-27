@@ -27,6 +27,13 @@ jobs:
         java-version: '17'
         distribution: 'temurin'
         cache: maven
+    - name: Check settings-security.xml
+      run: |
+        if [ ! -f /home/runner/.m2/settings-security.xml ]; then 
+          echo "Creating settings-security.xml" 
+          mkdir -p /home/runner/.m2 
+          echo "<?xml version='1.0' encoding='UTF-8'?>" > /home/runner/.m2/settings-security.xml 
+        fi
     - name: Build with Maven
       run: mvn clean install
     - name: Build and push Docker image
